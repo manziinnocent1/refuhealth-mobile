@@ -33,7 +33,15 @@ const COLORS = {
   error: '#D92D20',
 };
 
-export default function LoginScreen() {
+type LoginScreenProps = {
+  onSignIn: () => void;
+  onCreateAccount: () => void;
+};
+
+export default function LoginScreen({
+  onSignIn,
+  onCreateAccount,
+}: LoginScreenProps) {
   const [identifier, setIdentifier] = useState('');
   const [password, setPassword] = useState('');
   const [securePassword, setSecurePassword] = useState(true);

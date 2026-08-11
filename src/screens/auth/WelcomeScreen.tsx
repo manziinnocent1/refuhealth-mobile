@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 import {
   SafeAreaView,
   StatusBar,
@@ -6,175 +6,349 @@ import {
   Text,
   TouchableOpacity,
   View,
-} from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
+  ScrollView,
+  useWindowDimensions,
+  Platform,
+} from "react-native";
+import { Ionicons } from "@expo/vector-icons";
 
-export default function WelcomeScreen() {
+type WelcomeScreenProps = {
+  onGetStarted: () => void;
+  onSignIn: () => void;
+};
+
+export default function WelcomeScreen({
+  onGetStarted,
+  onSignIn,
+}: WelcomeScreenProps) {
+  const { width, height } = useWindowDimensions();
+
+  // Responsive measurements
+  const isSmallPhone = width < 360;
+  const isShortScreen = height < 720;
+
+  const horizontalPadding = isSmallPhone ? 18 : 22;
+
+  const scale = Math.min(Math.max(width / 390, 0.88), 1.08);
+
+  const illustrationWidth = Math.min(width - 70, 230);
+  const illustrationHeight = isShortScreen ? 165 : 185;
+
+  const titleSize = isSmallPhone ? 34 : isShortScreen ? 36 : 38;
+  const titleLineHeight = titleSize + 4;
+
+  const descriptionSize = isSmallPhone ? 14 : 15;
+
   return (
     <SafeAreaView style={styles.safeArea}>
-      <StatusBar
-        barStyle="dark-content"
-        backgroundColor={COLORS.white}
-      />
+      <StatusBar barStyle="dark-content" backgroundColor={COLORS.white} />
 
-      <View style={styles.container}>
+      <ScrollView
+        style={styles.scrollView}
+        contentContainerStyle={[
+          styles.scrollContent,
+          {
+            paddingHorizontal: horizontalPadding,
+          },
+        ]}
+        showsVerticalScrollIndicator={false}
+        bounces={false}
+      >
         {/* Header */}
-        <View style={styles.header}>
+        <View
+          style={[
+            styles.header,
+            {
+              paddingTop: isShortScreen ? 8 : 14,
+            },
+          ]}
+        >
           <View style={styles.logoContainer}>
-            <View style={styles.logoIcon}>
-              <Ionicons name="medical" size={24} color={COLORS.white} />
+            <View
+              style={[
+                styles.logoIcon,
+                {
+                  width: isSmallPhone ? 40 : 44,
+                  height: isSmallPhone ? 40 : 44,
+                },
+              ]}
+            >
+              <Ionicons
+                name="medical"
+                size={isSmallPhone ? 21 : 24}
+                color={COLORS.white}
+              />
             </View>
 
             <View>
-              <Text style={styles.logoText}>RefuHealth</Text>
-              <Text style={styles.logoSubtitle}>
-                Connected Care
+              <Text
+                style={[
+                  styles.logoText,
+                  {
+                    fontSize: isSmallPhone ? 19 : 20,
+                  },
+                ]}
+              >
+                RefuHealth
               </Text>
+
+              <Text style={styles.logoSubtitle}>Connected Care</Text>
             </View>
           </View>
 
           <TouchableOpacity
-            style={styles.languageButton}
+            style={[
+              styles.languageButton,
+              {
+                height: isSmallPhone ? 36 : 38,
+              },
+            ]}
             activeOpacity={0.7}
           >
-            <Ionicons
-              name="globe-outline"
-              size={19}
-              color={COLORS.black}
-            />
+            <Ionicons name="globe-outline" size={18} color={COLORS.black} />
+
             <Text style={styles.languageText}>EN</Text>
           </TouchableOpacity>
         </View>
 
-        {/* Main Hero */}
-        <View style={styles.heroSection}>
-          <View style={styles.networkContainer}>
-            {/* Decorative network */}
+        {/* Main Content */}
+        <View style={styles.mainContent}>
+          {/* Hero Illustration */}
+          <View
+            style={[
+              styles.networkContainer,
+              {
+                width: illustrationWidth,
+                height: illustrationHeight,
+                marginTop: isShortScreen ? 4 : 10,
+                marginBottom: isShortScreen ? 8 : 14,
+              },
+            ]}
+          >
+            {/* Decorative dots */}
             <View style={[styles.circle, styles.circleOne]} />
             <View style={[styles.circle, styles.circleTwo]} />
             <View style={[styles.circle, styles.circleThree]} />
 
-            <View style={styles.connectionLineOne} />
-            <View style={styles.connectionLineTwo} />
-            <View style={styles.connectionLineThree} />
+            {/* Connection lines */}
+            <View style={[styles.connectionLine, styles.lineOne]} />
+            <View style={[styles.connectionLine, styles.lineTwo]} />
+            <View style={[styles.connectionLine, styles.lineThree]} />
 
-            {/* Main medical icon */}
-            <View style={styles.mainIconOuter}>
-              <View style={styles.mainIcon}>
+            {/* Main icon */}
+            <View
+              style={[
+                styles.mainIconOuter,
+                {
+                  width: isSmallPhone ? 126 : 142,
+                  height: isSmallPhone ? 126 : 142,
+                  borderRadius: isSmallPhone ? 63 : 71,
+                },
+              ]}
+            >
+              <View
+                style={[
+                  styles.mainIcon,
+                  {
+                    width: isSmallPhone ? 94 : 108,
+                    height: isSmallPhone ? 94 : 108,
+                    borderRadius: isSmallPhone ? 47 : 54,
+                  },
+                ]}
+              >
                 <Ionicons
                   name="medical"
-                  size={58}
+                  size={isSmallPhone ? 48 : 58}
                   color={COLORS.blue}
                 />
               </View>
             </View>
 
-            {/* Floating icons */}
-            <View style={[styles.floatingIcon, styles.floatingTop]}>
+            {/* Floating people icon */}
+            <View
+              style={[
+                styles.floatingIcon,
+                styles.floatingTop,
+                {
+                  width: isSmallPhone ? 42 : 46,
+                  height: isSmallPhone ? 42 : 46,
+                },
+              ]}
+            >
               <Ionicons
                 name="people-outline"
-                size={22}
+                size={isSmallPhone ? 20 : 22}
                 color={COLORS.blue}
               />
             </View>
 
-            <View style={[styles.floatingIcon, styles.floatingLeft]}>
+            {/* Floating shield */}
+            <View
+              style={[
+                styles.floatingIcon,
+                styles.floatingLeft,
+                {
+                  width: isSmallPhone ? 42 : 46,
+                  height: isSmallPhone ? 42 : 46,
+                },
+              ]}
+            >
               <Ionicons
                 name="shield-checkmark-outline"
-                size={22}
+                size={isSmallPhone ? 20 : 22}
                 color={COLORS.blue}
               />
             </View>
 
-            <View style={[styles.floatingIcon, styles.floatingRight]}>
+            {/* Floating document */}
+            <View
+              style={[
+                styles.floatingIcon,
+                styles.floatingRight,
+                {
+                  width: isSmallPhone ? 42 : 46,
+                  height: isSmallPhone ? 42 : 46,
+                },
+              ]}
+            >
               <Ionicons
                 name="document-text-outline"
-                size={22}
+                size={isSmallPhone ? 20 : 22}
                 color={COLORS.blue}
               />
             </View>
           </View>
 
-          <Text style={styles.eyebrow}>
+          {/* Eyebrow */}
+          <Text
+            style={[
+              styles.eyebrow,
+              {
+                fontSize: isSmallPhone ? 10 : 11,
+                letterSpacing: isSmallPhone ? 1.6 : 2,
+              },
+            ]}
+          >
             CONNECTED HEALTHCARE
           </Text>
 
-          <Text style={styles.title}>
-            Better care,{'\n'}
+          {/* Heading */}
+          <Text
+            style={[
+              styles.title,
+              {
+                fontSize: titleSize,
+                lineHeight: titleLineHeight,
+              },
+            ]}
+          >
+            Better care,{"\n"}
             <Text style={styles.titleBlue}>connected.</Text>
           </Text>
 
-          <Text style={styles.description}>
-            Securely connect patients, receptionists, nurses,
-            doctors, laboratories and healthcare providers —
-            even when care happens across different facilities.
+          {/* Description */}
+          <Text
+            style={[
+              styles.description,
+              {
+                fontSize: descriptionSize,
+                lineHeight: isSmallPhone ? 21 : 23,
+                marginTop: isShortScreen ? 10 : 14,
+              },
+            ]}
+          >
+            Securely connect patients, receptionists, nurses, doctors,
+            laboratories and healthcare providers — even when care happens
+            across different facilities.
           </Text>
-        </View>
 
-        {/* Features */}
-        <View style={styles.features}>
-          <Feature
-            icon="shield-checkmark-outline"
-            title="Secure"
-            description="Protected health information"
-          />
+          {/* Features */}
+          <View
+            style={[
+              styles.features,
+              {
+                marginTop: isShortScreen ? 18 : 22,
+                paddingVertical: isShortScreen ? 10 : 12,
+              },
+            ]}
+          >
+            <Feature
+              icon="shield-checkmark-outline"
+              title="Secure"
+              description="Protected health information"
+              compact={isShortScreen}
+            />
 
-          <Feature
-            icon="cloud-offline-outline"
-            title="Offline Ready"
-            description="Keep working without internet"
-          />
+            <Feature
+              icon="cloud-offline-outline"
+              title="Offline Ready"
+              description="Keep working without internet"
+              compact={isShortScreen}
+            />
 
-          <Feature
-            icon="git-network-outline"
-            title="Connected"
-            description="Share care across facilities"
-          />
+            <Feature
+              icon="git-network-outline"
+              title="Connected"
+              description="Share care across facilities"
+              compact={isShortScreen}
+            />
+          </View>
         </View>
 
         {/* Bottom Actions */}
-        <View style={styles.bottomSection}>
+        <View
+          style={[
+            styles.bottomSection,
+            {
+              paddingBottom: Platform.OS === "ios" ? 8 : 14,
+            },
+          ]}
+        >
           <TouchableOpacity
             style={styles.primaryButton}
             activeOpacity={0.85}
-            onPress={() => {
-              console.log('Get Started pressed');
-            }}
+            onPress={onGetStarted}
           >
-            <Text style={styles.primaryButtonText}>
+            <Text
+              style={[
+                styles.primaryButtonText,
+                {
+                  fontSize: isSmallPhone ? 15 : 16,
+                },
+              ]}
+            >
               Get Started
             </Text>
 
-            <View style={styles.buttonIcon}>
-              <Ionicons
-                name="arrow-forward"
-                size={20}
-                color={COLORS.blue}
-              />
+            <View
+              style={[
+                styles.buttonIcon,
+                {
+                  width: isSmallPhone ? 38 : 40,
+                  height: isSmallPhone ? 38 : 40,
+                  borderRadius: isSmallPhone ? 12 : 13,
+                },
+              ]}
+            >
+              <Ionicons name="arrow-forward" size={19} color={COLORS.blue} />
             </View>
           </TouchableOpacity>
 
           <TouchableOpacity
             style={styles.signInButton}
             activeOpacity={0.7}
-            onPress={() => {
-              console.log('Sign In pressed');
-            }}
+            onPress={onSignIn}
           >
-            <Text style={styles.signInText}>
-              Already have an account?
-            </Text>
+            <Text style={styles.signInText}>Already have an account?</Text>
 
-            <Text style={styles.signInLink}>
-              Sign in
-            </Text>
+            <Text style={styles.signInLink}>Sign in</Text>
           </TouchableOpacity>
 
           <Text style={styles.footerText}>
             Healthcare information. Connected securely.
           </Text>
         </View>
-      </View>
+      </ScrollView>
     </SafeAreaView>
   );
 }
@@ -187,28 +361,36 @@ type FeatureProps = {
   icon: keyof typeof Ionicons.glyphMap;
   title: string;
   description: string;
+  compact?: boolean;
 };
 
-function Feature({
-  icon,
-  title,
-  description,
-}: FeatureProps) {
+function Feature({ icon, title, description, compact = false }: FeatureProps) {
   return (
-    <View style={styles.feature}>
-      <View style={styles.featureIcon}>
-        <Ionicons
-          name={icon}
-          size={20}
-          color={COLORS.blue}
-        />
+    <View
+      style={[
+        styles.feature,
+        {
+          paddingVertical: compact ? 4 : 6,
+        },
+      ]}
+    >
+      <View
+        style={[
+          styles.featureIcon,
+          {
+            width: compact ? 36 : 38,
+            height: compact ? 36 : 38,
+            borderRadius: compact ? 11 : 12,
+          },
+        ]}
+      >
+        <Ionicons name={icon} size={compact ? 19 : 20} color={COLORS.blue} />
       </View>
 
       <View style={styles.featureContent}>
         <Text style={styles.featureTitle}>{title}</Text>
-        <Text style={styles.featureDescription}>
-          {description}
-        </Text>
+
+        <Text style={styles.featureDescription}>{description}</Text>
       </View>
     </View>
   );
@@ -219,14 +401,14 @@ function Feature({
 /* -------------------------------------------------------------------------- */
 
 const COLORS = {
-  blue: '#1565D8',
-  blueDark: '#0D47A1',
-  blueLight: '#EAF2FF',
-  white: '#FFFFFF',
-  black: '#111827',
-  gray: '#667085',
-  lightGray: '#F5F7FA',
-  border: '#E5E7EB',
+  blue: "#1565D8",
+  blueDark: "#0D47A1",
+  blueLight: "#EAF2FF",
+  white: "#FFFFFF",
+  black: "#111827",
+  gray: "#667085",
+  lightGray: "#F5F7FA",
+  border: "#E5E7EB",
 };
 
 /* -------------------------------------------------------------------------- */
@@ -239,211 +421,203 @@ const styles = StyleSheet.create({
     backgroundColor: COLORS.white,
   },
 
-  container: {
+  scrollView: {
     flex: 1,
-    paddingHorizontal: 24,
+    backgroundColor: COLORS.white,
   },
 
-  /* Header */
+  scrollContent: {
+    flexGrow: 1,
+    paddingBottom: 4,
+  },
+
+  /* ---------------------------------------------------------------------- */
+  /* Header                                                                 */
+  /* ---------------------------------------------------------------------- */
 
   header: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    paddingTop: 14,
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
   },
 
   logoContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: "row",
+    alignItems: "center",
   },
 
   logoIcon: {
-    width: 44,
-    height: 44,
     borderRadius: 14,
     backgroundColor: COLORS.blue,
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginRight: 11,
+    alignItems: "center",
+    justifyContent: "center",
+    marginRight: 10,
   },
 
   logoText: {
     fontSize: 20,
-    fontWeight: '800',
+    fontWeight: "800",
     color: COLORS.black,
-    letterSpacing: -0.4,
+    letterSpacing: -0.5,
   },
 
   logoSubtitle: {
     marginTop: 1,
     fontSize: 11,
     color: COLORS.gray,
-    fontWeight: '500',
+    fontWeight: "500",
   },
 
   languageButton: {
-    height: 38,
-    paddingHorizontal: 12,
+    paddingHorizontal: 11,
     borderRadius: 20,
-    backgroundColor: COLORS.lightGray,
-    flexDirection: 'row',
-    alignItems: 'center',
+    backgroundColor: "#F6F8FC",
+    flexDirection: "row",
+    alignItems: "center",
     gap: 6,
   },
 
   languageText: {
     fontSize: 12,
-    fontWeight: '700',
+    fontWeight: "700",
     color: COLORS.black,
   },
 
-  /* Hero */
+  /* ---------------------------------------------------------------------- */
+  /* Main                                                                   */
+  /* ---------------------------------------------------------------------- */
 
-  heroSection: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    paddingTop: 10,
+  mainContent: {
+    alignItems: "center",
+    width: "100%",
   },
 
+  /* ---------------------------------------------------------------------- */
+  /* Hero Illustration                                                       */
+  /* ---------------------------------------------------------------------- */
+
   networkContainer: {
-    width: 230,
-    height: 190,
-    alignItems: 'center',
-    justifyContent: 'center',
-    position: 'relative',
-    marginBottom: 15,
+    alignItems: "center",
+    justifyContent: "center",
+    position: "relative",
   },
 
   mainIconOuter: {
-    width: 142,
-    height: 142,
-    borderRadius: 71,
     backgroundColor: COLORS.blueLight,
-    alignItems: 'center',
-    justifyContent: 'center',
+    alignItems: "center",
+    justifyContent: "center",
   },
 
   mainIcon: {
-    width: 108,
-    height: 108,
-    borderRadius: 54,
     backgroundColor: COLORS.white,
-    alignItems: 'center',
-    justifyContent: 'center',
+    alignItems: "center",
+    justifyContent: "center",
 
     shadowColor: COLORS.black,
     shadowOffset: {
       width: 0,
-      height: 6,
+      height: 5,
     },
-    shadowOpacity: 0.08,
-    shadowRadius: 15,
-    elevation: 5,
+    shadowOpacity: 0.07,
+    shadowRadius: 14,
+    elevation: 4,
   },
 
   circle: {
-    position: 'absolute',
-    width: 9,
-    height: 9,
-    borderRadius: 5,
+    position: "absolute",
+    width: 8,
+    height: 8,
+    borderRadius: 4,
     backgroundColor: COLORS.blue,
   },
 
   circleOne: {
-    top: 25,
-    left: 55,
+    top: "13%",
+    left: "24%",
   },
 
   circleTwo: {
-    bottom: 18,
-    left: 34,
+    bottom: "11%",
+    left: "16%",
   },
 
   circleThree: {
-    right: 35,
-    top: 74,
+    right: "13%",
+    top: "40%",
   },
 
-  connectionLineOne: {
-    position: 'absolute',
-    width: 75,
+  connectionLine: {
+    position: "absolute",
     height: 1,
-    backgroundColor: '#C8DBF7',
-    top: 53,
-    left: 60,
-    transform: [{ rotate: '32deg' }],
+    width: 65,
+    backgroundColor: "#C8DBF7",
   },
 
-  connectionLineTwo: {
-    position: 'absolute',
-    width: 70,
-    height: 1,
-    backgroundColor: '#C8DBF7',
-    bottom: 42,
-    left: 55,
-    transform: [{ rotate: '-28deg' }],
+  lineOne: {
+    top: "28%",
+    left: "27%",
+    transform: [{ rotate: "32deg" }],
   },
 
-  connectionLineThree: {
-    position: 'absolute',
-    width: 70,
-    height: 1,
-    backgroundColor: '#C8DBF7',
-    right: 51,
-    top: 82,
-    transform: [{ rotate: '-25deg' }],
+  lineTwo: {
+    bottom: "23%",
+    left: "25%",
+    transform: [{ rotate: "-28deg" }],
+  },
+
+  lineThree: {
+    right: "22%",
+    top: "43%",
+    transform: [{ rotate: "-25deg" }],
   },
 
   floatingIcon: {
-    position: 'absolute',
-    width: 46,
-    height: 46,
-    borderRadius: 15,
+    position: "absolute",
+    borderRadius: 14,
     backgroundColor: COLORS.white,
-    alignItems: 'center',
-    justifyContent: 'center',
+    alignItems: "center",
+    justifyContent: "center",
 
     shadowColor: COLORS.black,
     shadowOffset: {
       width: 0,
-      height: 4,
+      height: 3,
     },
-    shadowOpacity: 0.08,
-    shadowRadius: 10,
-    elevation: 4,
+    shadowOpacity: 0.07,
+    shadowRadius: 9,
+    elevation: 3,
   },
 
   floatingTop: {
-    top: 5,
-    right: 35,
+    top: 2,
+    right: "14%",
   },
 
   floatingLeft: {
-    bottom: 5,
-    left: 12,
+    bottom: 1,
+    left: "7%",
   },
 
   floatingRight: {
-    bottom: 25,
-    right: 4,
+    bottom: 18,
+    right: "1%",
   },
 
+  /* ---------------------------------------------------------------------- */
+  /* Typography                                                             */
+  /* ---------------------------------------------------------------------- */
+
   eyebrow: {
-    fontSize: 11,
-    fontWeight: '800',
-    letterSpacing: 2,
+    fontWeight: "800",
     color: COLORS.blue,
-    marginBottom: 10,
+    marginBottom: 8,
+    textAlign: "center",
   },
 
   title: {
-    fontSize: 38,
-    lineHeight: 43,
-    fontWeight: '800',
-    letterSpacing: -1.4,
-    textAlign: 'center',
+    fontWeight: "800",
+    letterSpacing: -1.3,
+    textAlign: "center",
     color: COLORS.black,
   },
 
@@ -452,37 +626,32 @@ const styles = StyleSheet.create({
   },
 
   description: {
-    maxWidth: 340,
-    marginTop: 14,
-    fontSize: 15,
-    lineHeight: 23,
+    width: "100%",
+    maxWidth: 350,
     color: COLORS.gray,
-    textAlign: 'center',
+    textAlign: "center",
   },
 
-  /* Features */
+  /* ---------------------------------------------------------------------- */
+  /* Features                                                               */
+  /* ---------------------------------------------------------------------- */
 
   features: {
-    width: '100%',
+    width: "100%",
     backgroundColor: COLORS.lightGray,
     borderRadius: 20,
-    padding: 14,
-    marginBottom: 16,
+    paddingHorizontal: 14,
   },
 
   feature: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    paddingVertical: 6,
+    flexDirection: "row",
+    alignItems: "center",
   },
 
   featureIcon: {
-    width: 38,
-    height: 38,
-    borderRadius: 12,
     backgroundColor: COLORS.white,
-    alignItems: 'center',
-    justifyContent: 'center',
+    alignItems: "center",
+    justifyContent: "center",
     marginRight: 12,
   },
 
@@ -492,7 +661,7 @@ const styles = StyleSheet.create({
 
   featureTitle: {
     fontSize: 13,
-    fontWeight: '700',
+    fontWeight: "700",
     color: COLORS.black,
   },
 
@@ -502,53 +671,51 @@ const styles = StyleSheet.create({
     color: COLORS.gray,
   },
 
-  /* Bottom */
+  /* ---------------------------------------------------------------------- */
+  /* Bottom                                                                 */
+  /* ---------------------------------------------------------------------- */
 
   bottomSection: {
-    paddingBottom: 12,
+    width: "100%",
+    marginTop: 16,
   },
 
   primaryButton: {
-    height: 58,
-    borderRadius: 18,
+    width: "100%",
     backgroundColor: COLORS.blue,
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-    position: 'relative',
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    position: "relative",
 
     shadowColor: COLORS.blue,
     shadowOffset: {
       width: 0,
-      height: 7,
+      height: 6,
     },
-    shadowOpacity: 0.22,
-    shadowRadius: 14,
-    elevation: 6,
+    shadowOpacity: 0.18,
+    shadowRadius: 12,
+    elevation: 5,
   },
 
   primaryButtonText: {
     color: COLORS.white,
-    fontSize: 16,
-    fontWeight: '800',
+    fontWeight: "800",
   },
 
   buttonIcon: {
-    position: 'absolute',
-    right: 8,
-    width: 42,
-    height: 42,
-    borderRadius: 14,
+    position: "absolute",
+    right: 7,
     backgroundColor: COLORS.white,
-    alignItems: 'center',
-    justifyContent: 'center',
+    alignItems: "center",
+    justifyContent: "center",
   },
 
   signInButton: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginTop: 15,
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    marginTop: 13,
   },
 
   signInText: {
@@ -559,14 +726,14 @@ const styles = StyleSheet.create({
   signInLink: {
     marginLeft: 5,
     fontSize: 13,
-    fontWeight: '800',
+    fontWeight: "800",
     color: COLORS.blue,
   },
 
   footerText: {
-    textAlign: 'center',
-    marginTop: 15,
+    textAlign: "center",
+    marginTop: 12,
     fontSize: 10,
-    color: '#98A2B3',
+    color: "#98A2B3",
   },
 });
