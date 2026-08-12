@@ -319,7 +319,7 @@ export default function WelcomeScreen({
             >
               Get Started
             </Text>
-
+            
             <View
               style={[
                 styles.buttonIcon,
@@ -334,7 +334,7 @@ export default function WelcomeScreen({
             </View>
           </TouchableOpacity>
 
-          <TouchableOpacity
+          {/* <TouchableOpacity
             style={styles.signInButton}
             activeOpacity={0.7}
             onPress={onSignIn}
@@ -342,7 +342,7 @@ export default function WelcomeScreen({
             <Text style={styles.signInText}>Already have an account?</Text>
 
             <Text style={styles.signInLink}>Sign in</Text>
-          </TouchableOpacity>
+          </TouchableOpacity> */}
 
           <Text style={styles.footerText}>
             Healthcare information. Connected securely.
@@ -681,34 +681,50 @@ const styles = StyleSheet.create({
   },
 
   primaryButton: {
-    width: "100%",
-    backgroundColor: COLORS.blue,
+    alignSelf: "center",
+
+    height: 58,
+
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
-    position: "relative",
+
+    backgroundColor: "transparent",
+
+    paddingHorizontal: 8,
+  },
+
+  primaryButtonText: {
+    color: COLORS.blue,
+
+    fontSize: 18,
+    fontWeight: "800",
+
+    marginRight: 14,
+
+    letterSpacing: 0.2,
+  },
+
+  buttonIcon: {
+    width: 52,
+    height: 52,
+
+    borderRadius: 26,
+
+    backgroundColor: COLORS.white,
+
+    alignItems: "center",
+    justifyContent: "center",
 
     shadowColor: COLORS.blue,
     shadowOffset: {
       width: 0,
       height: 6,
     },
-    shadowOpacity: 0.18,
+    shadowOpacity: 0.25,
     shadowRadius: 12,
-    elevation: 5,
-  },
 
-  primaryButtonText: {
-    color: COLORS.white,
-    fontWeight: "800",
-  },
-
-  buttonIcon: {
-    position: "absolute",
-    right: 7,
-    backgroundColor: COLORS.white,
-    alignItems: "center",
-    justifyContent: "center",
+    elevation: 7,
   },
 
   signInButton: {

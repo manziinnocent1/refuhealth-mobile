@@ -82,379 +82,369 @@ export default function RegisterScreen({
     <SafeAreaView style={styles.safeArea}>
       <StatusBar barStyle="dark-content" backgroundColor={COLORS.white} />
 
-      <KeyboardAvoidingView
-        style={styles.keyboardContainer}
-        behavior={Platform.OS === "ios" ? "padding" : "height"}
-        keyboardVerticalOffset={Platform.OS === "ios" ? 0 : 20}
+      <ScrollView
+        style={styles.scrollView}
+        contentContainerStyle={styles.scrollContent}
+        keyboardShouldPersistTaps="handled"
+        keyboardDismissMode="on-drag"
+        showsVerticalScrollIndicator={true}
+        bounces={true}
       >
-        <ScrollView
-          style={styles.scrollView}
-          contentContainerStyle={styles.scrollContent}
-          keyboardShouldPersistTaps="handled"
-          showsVerticalScrollIndicator={false}
-          bounces={true}
-          alwaysBounceVertical={true}
-        >
-          {/* Header */}
-          <View style={styles.header}>
-            <View style={styles.logoContainer}>
-              <View style={styles.logo}>
-                <Ionicons name="medical" size={23} color={COLORS.white} />
-              </View>
-
-              <View>
-                <Text style={styles.brandName}>RefuHealth</Text>
-
-                <Text style={styles.brandTagline}>Connected Care</Text>
-              </View>
+        {/* Header */}
+        <View style={styles.header}>
+          <View style={styles.logoContainer}>
+            <View style={styles.logo}>
+              <Ionicons name="medical" size={23} color={COLORS.white} />
             </View>
 
-            <TouchableOpacity
-              style={styles.helpButton}
-              activeOpacity={0.7}
-              accessibilityLabel="Get help"
+            <View>
+              <Text style={styles.brandName}>RefuHealth</Text>
+
+              <Text style={styles.brandTagline}>Connected Care</Text>
+            </View>
+          </View>
+
+          <TouchableOpacity
+            style={styles.helpButton}
+            activeOpacity={0.7}
+            accessibilityLabel="Get help"
+          >
+            <Ionicons
+              name="help-circle-outline"
+              size={22}
+              color={COLORS.gray900}
+            />
+          </TouchableOpacity>
+        </View>
+
+        {/* Back */}
+        <TouchableOpacity
+          style={styles.backButton}
+          onPress={onBack}
+          activeOpacity={0.7}
+        >
+          <View style={styles.backIcon}>
+            <Ionicons name="arrow-back" size={17} color={COLORS.blue} />
+          </View>
+
+          <Text style={styles.backText}>Back</Text>
+        </TouchableOpacity>
+
+        {/* Intro */}
+        <View style={styles.welcomeSection}>
+          <Text style={styles.eyebrow}>CREATE YOUR ACCOUNT</Text>
+
+          <Text style={styles.title}>
+            Join
+            <Text style={styles.titleBlue}> RefuHealth</Text>
+          </Text>
+
+          <Text style={styles.description}>
+            Create your secure account to connect with patients, healthcare
+            teams and facilities.
+          </Text>
+        </View>
+
+        {/* Security Banner */}
+        <View style={styles.securityBanner}>
+          <View style={styles.securityIcon}>
+            <Ionicons name="shield-checkmark" size={19} color={COLORS.blue} />
+          </View>
+
+          <View style={styles.securityContent}>
+            <Text style={styles.securityTitle}>
+              Your information is protected
+            </Text>
+
+            <Text style={styles.securityText}>
+              Healthcare data stays secure and private.
+            </Text>
+          </View>
+
+          <View style={styles.secureBadge}>
+            <View style={styles.onlineDot} />
+
+            <Text style={styles.secureBadgeText}>Secure</Text>
+          </View>
+        </View>
+
+        {/* Registration Card */}
+        <View style={styles.registerCard}>
+          {/* Full Name */}
+          <View style={styles.inputGroup}>
+            <Text style={styles.label}>Full name</Text>
+
+            <View
+              style={[
+                styles.inputContainer,
+                fullName.length > 0 && styles.inputActive,
+              ]}
             >
               <Ionicons
-                name="help-circle-outline"
-                size={22}
-                color={COLORS.gray900}
+                name="person-outline"
+                size={20}
+                color={fullName.length > 0 ? COLORS.blue : COLORS.gray500}
               />
-            </TouchableOpacity>
+
+              <TextInput
+                style={styles.input}
+                value={fullName}
+                onChangeText={setFullName}
+                placeholder="Enter your full name"
+                placeholderTextColor={COLORS.gray500}
+                autoCapitalize="words"
+                autoCorrect={false}
+                returnKeyType="next"
+              />
+            </View>
           </View>
 
-          {/* Back */}
+          {/* Email */}
+          <View style={styles.inputGroup}>
+            <Text style={styles.label}>Email address</Text>
+
+            <View
+              style={[
+                styles.inputContainer,
+                email.length > 0 && styles.inputActive,
+              ]}
+            >
+              <Ionicons
+                name="mail-outline"
+                size={20}
+                color={email.length > 0 ? COLORS.blue : COLORS.gray500}
+              />
+
+              <TextInput
+                style={styles.input}
+                value={email}
+                onChangeText={setEmail}
+                placeholder="Enter your email address"
+                placeholderTextColor={COLORS.gray500}
+                autoCapitalize="none"
+                autoCorrect={false}
+                keyboardType="email-address"
+                returnKeyType="next"
+              />
+            </View>
+          </View>
+
+          {/* Employee ID */}
+          <View style={styles.inputGroup}>
+            <Text style={styles.label}>Employee / Staff ID</Text>
+
+            <View
+              style={[
+                styles.inputContainer,
+                employeeId.length > 0 && styles.inputActive,
+              ]}
+            >
+              <Ionicons
+                name="id-card-outline"
+                size={20}
+                color={employeeId.length > 0 ? COLORS.blue : COLORS.gray500}
+              />
+
+              <TextInput
+                style={styles.input}
+                value={employeeId}
+                onChangeText={setEmployeeId}
+                placeholder="Enter your staff ID"
+                placeholderTextColor={COLORS.gray500}
+                autoCapitalize="characters"
+                autoCorrect={false}
+                returnKeyType="next"
+              />
+            </View>
+
+            <Text style={styles.helperText}>
+              Use the ID provided by your healthcare organization.
+            </Text>
+          </View>
+
+          {/* Password */}
+          <View style={styles.inputGroup}>
+            <Text style={styles.label}>Password</Text>
+
+            <View
+              style={[
+                styles.inputContainer,
+                password.length > 0 && styles.inputActive,
+              ]}
+            >
+              <Ionicons
+                name="lock-closed-outline"
+                size={20}
+                color={password.length > 0 ? COLORS.blue : COLORS.gray500}
+              />
+
+              <TextInput
+                style={styles.input}
+                value={password}
+                onChangeText={setPassword}
+                placeholder="Create a password"
+                placeholderTextColor={COLORS.gray500}
+                secureTextEntry={securePassword}
+                autoCapitalize="none"
+                autoCorrect={false}
+                returnKeyType="next"
+              />
+
+              <TouchableOpacity
+                onPress={() => setSecurePassword(!securePassword)}
+                activeOpacity={0.7}
+                accessibilityLabel={
+                  securePassword ? "Show password" : "Hide password"
+                }
+              >
+                <Ionicons
+                  name={securePassword ? "eye-outline" : "eye-off-outline"}
+                  size={21}
+                  color={COLORS.gray500}
+                />
+              </TouchableOpacity>
+            </View>
+
+            <Text style={styles.helperText}>Use at least 8 characters.</Text>
+          </View>
+
+          {/* Confirm Password */}
+          <View style={styles.inputGroup}>
+            <Text style={styles.label}>Confirm password</Text>
+
+            <View
+              style={[
+                styles.inputContainer,
+                confirmPassword.length > 0 && styles.inputActive,
+                confirmPassword.length > 0 &&
+                  !passwordsMatch &&
+                  styles.inputError,
+                passwordsMatch && styles.inputSuccess,
+              ]}
+            >
+              <Ionicons
+                name="lock-closed-outline"
+                size={20}
+                color={
+                  passwordsMatch
+                    ? COLORS.success
+                    : confirmPassword.length > 0
+                      ? COLORS.error
+                      : COLORS.gray500
+                }
+              />
+
+              <TextInput
+                style={styles.input}
+                value={confirmPassword}
+                onChangeText={setConfirmPassword}
+                placeholder="Confirm your password"
+                placeholderTextColor={COLORS.gray500}
+                secureTextEntry={secureConfirmPassword}
+                autoCapitalize="none"
+                autoCorrect={false}
+                returnKeyType="done"
+                onSubmitEditing={handleRegister}
+              />
+
+              <TouchableOpacity
+                onPress={() => setSecureConfirmPassword(!secureConfirmPassword)}
+                activeOpacity={0.7}
+                accessibilityLabel={
+                  secureConfirmPassword
+                    ? "Show confirmation password"
+                    : "Hide confirmation password"
+                }
+              >
+                <Ionicons
+                  name={
+                    secureConfirmPassword ? "eye-outline" : "eye-off-outline"
+                  }
+                  size={21}
+                  color={COLORS.gray500}
+                />
+              </TouchableOpacity>
+            </View>
+
+            {confirmPassword.length > 0 && !passwordsMatch && (
+              <Text style={styles.errorText}>Passwords do not match.</Text>
+            )}
+
+            {passwordsMatch && (
+              <View style={styles.matchRow}>
+                <Ionicons
+                  name="checkmark-circle"
+                  size={14}
+                  color={COLORS.success}
+                />
+
+                <Text style={styles.successText}>Passwords match</Text>
+              </View>
+            )}
+          </View>
+
+          {/* Terms */}
           <TouchableOpacity
-            style={styles.backButton}
-            onPress={onBack}
+            style={styles.termsRow}
+            onPress={() => setAcceptedTerms(!acceptedTerms)}
             activeOpacity={0.7}
           >
-            <View style={styles.backIcon}>
-              <Ionicons name="arrow-back" size={17} color={COLORS.blue} />
+            <View
+              style={[styles.checkbox, acceptedTerms && styles.checkboxActive]}
+            >
+              {acceptedTerms && (
+                <Ionicons name="checkmark" size={15} color={COLORS.white} />
+              )}
             </View>
 
-            <Text style={styles.backText}>Back</Text>
+            <Text style={styles.termsText}>
+              I agree to the{" "}
+              <Text style={styles.termsLink}>Terms of Service</Text> and{" "}
+              <Text style={styles.termsLink}>Privacy Policy</Text>.
+            </Text>
           </TouchableOpacity>
 
-          {/* Intro */}
-          <View style={styles.welcomeSection}>
-            <Text style={styles.eyebrow}>CREATE YOUR ACCOUNT</Text>
+          {/* Create Account */}
+          <TouchableOpacity
+            style={[
+              styles.registerButton,
+              !canRegister && styles.registerButtonDisabled,
+            ]}
+            activeOpacity={0.85}
+            disabled={!canRegister}
+            onPress={handleRegister}
+          >
+            <Text style={styles.registerButtonText}>Create account</Text>
 
-            <Text style={styles.title}>
-              Join
-              <Text style={styles.titleBlue}> RefuHealth</Text>
+            <View style={styles.registerArrow}>
+              <Ionicons name="arrow-forward" size={19} color={COLORS.blue} />
+            </View>
+          </TouchableOpacity>
+        </View>
+
+        {/* Login Link */}
+        <View style={styles.loginPrompt}>
+          <Text style={styles.loginPromptText}>Already have an account?</Text>
+
+          <TouchableOpacity activeOpacity={0.7} onPress={onSignIn}>
+            <Text style={styles.loginLink}>Sign in</Text>
+          </TouchableOpacity>
+        </View>
+
+        {/* Footer */}
+        <View style={styles.footer}>
+          <View style={styles.footerSecurity}>
+            <Ionicons name="lock-closed" size={12} color={COLORS.gray500} />
+
+            <Text style={styles.footerText}>
+              Secure healthcare information system
             </Text>
-
-            <Text style={styles.description}>
-              Create your secure account to connect with patients, healthcare
-              teams and facilities.
-            </Text>
           </View>
 
-          {/* Security Banner */}
-          <View style={styles.securityBanner}>
-            <View style={styles.securityIcon}>
-              <Ionicons name="shield-checkmark" size={19} color={COLORS.blue} />
-            </View>
-
-            <View style={styles.securityContent}>
-              <Text style={styles.securityTitle}>
-                Your information is protected
-              </Text>
-
-              <Text style={styles.securityText}>
-                Healthcare data stays secure and private.
-              </Text>
-            </View>
-
-            <View style={styles.secureBadge}>
-              <View style={styles.onlineDot} />
-
-              <Text style={styles.secureBadgeText}>Secure</Text>
-            </View>
-          </View>
-
-          {/* Registration Card */}
-          <View style={styles.registerCard}>
-            {/* Full Name */}
-            <View style={styles.inputGroup}>
-              <Text style={styles.label}>Full name</Text>
-
-              <View
-                style={[
-                  styles.inputContainer,
-                  fullName.length > 0 && styles.inputActive,
-                ]}
-              >
-                <Ionicons
-                  name="person-outline"
-                  size={20}
-                  color={fullName.length > 0 ? COLORS.blue : COLORS.gray500}
-                />
-
-                <TextInput
-                  style={styles.input}
-                  value={fullName}
-                  onChangeText={setFullName}
-                  placeholder="Enter your full name"
-                  placeholderTextColor={COLORS.gray500}
-                  autoCapitalize="words"
-                  autoCorrect={false}
-                  returnKeyType="next"
-                />
-              </View>
-            </View>
-
-            {/* Email */}
-            <View style={styles.inputGroup}>
-              <Text style={styles.label}>Email address</Text>
-
-              <View
-                style={[
-                  styles.inputContainer,
-                  email.length > 0 && styles.inputActive,
-                ]}
-              >
-                <Ionicons
-                  name="mail-outline"
-                  size={20}
-                  color={email.length > 0 ? COLORS.blue : COLORS.gray500}
-                />
-
-                <TextInput
-                  style={styles.input}
-                  value={email}
-                  onChangeText={setEmail}
-                  placeholder="Enter your email address"
-                  placeholderTextColor={COLORS.gray500}
-                  autoCapitalize="none"
-                  autoCorrect={false}
-                  keyboardType="email-address"
-                  returnKeyType="next"
-                />
-              </View>
-            </View>
-
-            {/* Employee ID */}
-            <View style={styles.inputGroup}>
-              <Text style={styles.label}>Employee / Staff ID</Text>
-
-              <View
-                style={[
-                  styles.inputContainer,
-                  employeeId.length > 0 && styles.inputActive,
-                ]}
-              >
-                <Ionicons
-                  name="id-card-outline"
-                  size={20}
-                  color={employeeId.length > 0 ? COLORS.blue : COLORS.gray500}
-                />
-
-                <TextInput
-                  style={styles.input}
-                  value={employeeId}
-                  onChangeText={setEmployeeId}
-                  placeholder="Enter your staff ID"
-                  placeholderTextColor={COLORS.gray500}
-                  autoCapitalize="characters"
-                  autoCorrect={false}
-                  returnKeyType="next"
-                />
-              </View>
-
-              <Text style={styles.helperText}>
-                Use the ID provided by your healthcare organization.
-              </Text>
-            </View>
-
-            {/* Password */}
-            <View style={styles.inputGroup}>
-              <Text style={styles.label}>Password</Text>
-
-              <View
-                style={[
-                  styles.inputContainer,
-                  password.length > 0 && styles.inputActive,
-                ]}
-              >
-                <Ionicons
-                  name="lock-closed-outline"
-                  size={20}
-                  color={password.length > 0 ? COLORS.blue : COLORS.gray500}
-                />
-
-                <TextInput
-                  style={styles.input}
-                  value={password}
-                  onChangeText={setPassword}
-                  placeholder="Create a password"
-                  placeholderTextColor={COLORS.gray500}
-                  secureTextEntry={securePassword}
-                  autoCapitalize="none"
-                  autoCorrect={false}
-                  returnKeyType="next"
-                />
-
-                <TouchableOpacity
-                  onPress={() => setSecurePassword(!securePassword)}
-                  activeOpacity={0.7}
-                  accessibilityLabel={
-                    securePassword ? "Show password" : "Hide password"
-                  }
-                >
-                  <Ionicons
-                    name={securePassword ? "eye-outline" : "eye-off-outline"}
-                    size={21}
-                    color={COLORS.gray500}
-                  />
-                </TouchableOpacity>
-              </View>
-
-              <Text style={styles.helperText}>Use at least 8 characters.</Text>
-            </View>
-
-            {/* Confirm Password */}
-            <View style={styles.inputGroup}>
-              <Text style={styles.label}>Confirm password</Text>
-
-              <View
-                style={[
-                  styles.inputContainer,
-                  confirmPassword.length > 0 && styles.inputActive,
-                  confirmPassword.length > 0 &&
-                    !passwordsMatch &&
-                    styles.inputError,
-                  passwordsMatch && styles.inputSuccess,
-                ]}
-              >
-                <Ionicons
-                  name="lock-closed-outline"
-                  size={20}
-                  color={
-                    passwordsMatch
-                      ? COLORS.success
-                      : confirmPassword.length > 0
-                        ? COLORS.error
-                        : COLORS.gray500
-                  }
-                />
-
-                <TextInput
-                  style={styles.input}
-                  value={confirmPassword}
-                  onChangeText={setConfirmPassword}
-                  placeholder="Confirm your password"
-                  placeholderTextColor={COLORS.gray500}
-                  secureTextEntry={secureConfirmPassword}
-                  autoCapitalize="none"
-                  autoCorrect={false}
-                  returnKeyType="done"
-                  onSubmitEditing={handleRegister}
-                />
-
-                <TouchableOpacity
-                  onPress={() =>
-                    setSecureConfirmPassword(!secureConfirmPassword)
-                  }
-                  activeOpacity={0.7}
-                  accessibilityLabel={
-                    secureConfirmPassword
-                      ? "Show confirmation password"
-                      : "Hide confirmation password"
-                  }
-                >
-                  <Ionicons
-                    name={
-                      secureConfirmPassword ? "eye-outline" : "eye-off-outline"
-                    }
-                    size={21}
-                    color={COLORS.gray500}
-                  />
-                </TouchableOpacity>
-              </View>
-
-              {confirmPassword.length > 0 && !passwordsMatch && (
-                <Text style={styles.errorText}>Passwords do not match.</Text>
-              )}
-
-              {passwordsMatch && (
-                <View style={styles.matchRow}>
-                  <Ionicons
-                    name="checkmark-circle"
-                    size={14}
-                    color={COLORS.success}
-                  />
-
-                  <Text style={styles.successText}>Passwords match</Text>
-                </View>
-              )}
-            </View>
-
-            {/* Terms */}
-            <TouchableOpacity
-              style={styles.termsRow}
-              onPress={() => setAcceptedTerms(!acceptedTerms)}
-              activeOpacity={0.7}
-            >
-              <View
-                style={[
-                  styles.checkbox,
-                  acceptedTerms && styles.checkboxActive,
-                ]}
-              >
-                {acceptedTerms && (
-                  <Ionicons name="checkmark" size={15} color={COLORS.white} />
-                )}
-              </View>
-
-              <Text style={styles.termsText}>
-                I agree to the{" "}
-                <Text style={styles.termsLink}>Terms of Service</Text> and{" "}
-                <Text style={styles.termsLink}>Privacy Policy</Text>.
-              </Text>
-            </TouchableOpacity>
-
-            {/* Create Account */}
-            <TouchableOpacity
-              style={[
-                styles.registerButton,
-                !canRegister && styles.registerButtonDisabled,
-              ]}
-              activeOpacity={0.85}
-              disabled={!canRegister}
-              onPress={handleRegister}
-            >
-              <Text style={styles.registerButtonText}>Create account</Text>
-
-              <View style={styles.registerArrow}>
-                <Ionicons name="arrow-forward" size={19} color={COLORS.blue} />
-              </View>
-            </TouchableOpacity>
-          </View>
-
-          {/* Login Link */}
-          <View style={styles.loginPrompt}>
-            <Text style={styles.loginPromptText}>Already have an account?</Text>
-
-            <TouchableOpacity activeOpacity={0.7} onPress={onSignIn}>
-              <Text style={styles.loginLink}>Sign in</Text>
-            </TouchableOpacity>
-          </View>
-
-          {/* Footer */}
-          <View style={styles.footer}>
-            <View style={styles.footerSecurity}>
-              <Ionicons name="lock-closed" size={12} color={COLORS.gray500} />
-
-              <Text style={styles.footerText}>
-                Secure healthcare information system
-              </Text>
-            </View>
-
-            <Text style={styles.version}>RefuHealth • v1.0</Text>
-          </View>
-        </ScrollView>
-      </KeyboardAvoidingView>
+          <Text style={styles.version}>RefuHealth • v1.0</Text>
+        </View>
+      </ScrollView>
+      {/* </KeyboardAvoidingView> */}
     </SafeAreaView>
   );
 }
@@ -465,10 +455,6 @@ const styles = StyleSheet.create({
     backgroundColor: COLORS.white,
   },
 
-  keyboardContainer: {
-    flex: 1,
-  },
-
   scrollView: {
     flex: 1,
   },
@@ -477,7 +463,7 @@ const styles = StyleSheet.create({
     flexGrow: 1,
     paddingHorizontal: 24,
     paddingTop: 14,
-    paddingBottom: 40,
+    paddingBottom: 120,
   },
 
   /* Header */
