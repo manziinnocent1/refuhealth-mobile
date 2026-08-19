@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
+import { router } from "expo-router";
 import {
   KeyboardAvoidingView,
   Platform,
-  SafeAreaView,
   ScrollView,
   StatusBar,
   StyleSheet,
@@ -11,6 +11,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
+import { SafeAreaView } from "react-native-safe-area-context";
 import { Ionicons } from '@expo/vector-icons';
 
 const COLORS = {
@@ -42,14 +43,12 @@ export default function LoginScreen({
   onSignIn,
   onCreateAccount,
 }: LoginScreenProps) {
-  const [identifier, setIdentifier] = useState('');
-  const [password, setPassword] = useState('');
+  const [identifier, setIdentifier] = useState("");
+  const [password, setPassword] = useState("");
   const [securePassword, setSecurePassword] = useState(true);
   const [rememberMe, setRememberMe] = useState(false);
 
-  const canLogin =
-    identifier.trim().length > 0 &&
-    password.trim().length > 0;
+  const canLogin = identifier.trim().length > 0 && password.trim().length > 0;
 
   const handleLogin = () => {
     if (!canLogin) {
@@ -57,7 +56,7 @@ export default function LoginScreen({
     }
 
     // Authentication will be connected to the Django API later.
-    console.log('Login:', {
+    console.log("Login:", {
       identifier,
       password,
       rememberMe,
@@ -66,14 +65,11 @@ export default function LoginScreen({
 
   return (
     <SafeAreaView style={styles.safeArea}>
-      <StatusBar
-        barStyle="dark-content"
-        backgroundColor={COLORS.white}
-      />
+      <StatusBar barStyle="dark-content" backgroundColor={COLORS.white} />
 
       <KeyboardAvoidingView
         style={styles.keyboardContainer}
-        behavior={Platform.OS === 'ios' ? 'padding' : undefined}
+        behavior={Platform.OS === "ios" ? "padding" : undefined}
       >
         <ScrollView
           contentContainerStyle={styles.scrollContent}
@@ -87,19 +83,13 @@ export default function LoginScreen({
           <View style={styles.header}>
             <View style={styles.logoContainer}>
               <View style={styles.logo}>
-                <Ionicons
-                  name="medical"
-                  size={23}
-                  color={COLORS.white}
-                />
+                <Ionicons name="medical" size={23} color={COLORS.white} />
               </View>
 
               <View>
                 <Text style={styles.brandName}>RefuHealth</Text>
 
-                <Text style={styles.brandTagline}>
-                  Connected Care
-                </Text>
+                <Text style={styles.brandTagline}>Connected Care</Text>
               </View>
             </View>
 
@@ -122,17 +112,11 @@ export default function LoginScreen({
 
           <View style={styles.securityBanner}>
             <View style={styles.securityIcon}>
-              <Ionicons
-                name="shield-checkmark"
-                size={19}
-                color={COLORS.blue}
-              />
+              <Ionicons name="shield-checkmark" size={19} color={COLORS.blue} />
             </View>
 
             <View style={styles.securityContent}>
-              <Text style={styles.securityTitle}>
-                Secure healthcare access
-              </Text>
+              <Text style={styles.securityTitle}>Secure healthcare access</Text>
 
               <Text style={styles.securityText}>
                 Your health information is protected.
@@ -150,20 +134,16 @@ export default function LoginScreen({
           {/* ---------------------------------------------------------- */}
 
           <View style={styles.welcomeSection}>
-            <Text style={styles.eyebrow}>
-              WELCOME BACK
-            </Text>
+            <Text style={styles.eyebrow}>WELCOME BACK</Text>
 
             <Text style={styles.title}>
               Sign in to your
-              <Text style={styles.titleBlue}>
-                {' '}RefuHealth
-              </Text>
+              <Text style={styles.titleBlue}> RefuHealth</Text>
             </Text>
 
             <Text style={styles.description}>
-              Access the information you need to provide
-              timely, coordinated and patient-centered care.
+              Access the information you need to provide timely, coordinated and
+              patient-centered care.
             </Text>
           </View>
 
@@ -175,9 +155,7 @@ export default function LoginScreen({
             {/* Identifier */}
 
             <View style={styles.inputGroup}>
-              <Text style={styles.label}>
-                Email or Employee ID
-              </Text>
+              <Text style={styles.label}>Email or Employee ID</Text>
 
               <View
                 style={[
@@ -188,11 +166,7 @@ export default function LoginScreen({
                 <Ionicons
                   name="person-outline"
                   size={20}
-                  color={
-                    identifier.length > 0
-                      ? COLORS.blue
-                      : COLORS.gray500
-                  }
+                  color={identifier.length > 0 ? COLORS.blue : COLORS.gray500}
                 />
 
                 <TextInput
@@ -213,19 +187,15 @@ export default function LoginScreen({
 
             <View style={styles.inputGroup}>
               <View style={styles.passwordLabelRow}>
-                <Text style={styles.label}>
-                  Password
-                </Text>
+                <Text style={styles.label}>Password</Text>
 
                 <TouchableOpacity
                   activeOpacity={0.7}
                   onPress={() => {
-                    console.log('Forgot password');
+                    console.log("Forgot password");
                   }}
                 >
-                  <Text style={styles.forgotPassword}>
-                    Forgot password?
-                  </Text>
+                  <Text style={styles.forgotPassword}>Forgot password?</Text>
                 </TouchableOpacity>
               </View>
 
@@ -238,11 +208,7 @@ export default function LoginScreen({
                 <Ionicons
                   name="lock-closed-outline"
                   size={20}
-                  color={
-                    password.length > 0
-                      ? COLORS.blue
-                      : COLORS.gray500
-                  }
+                  color={password.length > 0 ? COLORS.blue : COLORS.gray500}
                 />
 
                 <TextInput
@@ -259,22 +225,14 @@ export default function LoginScreen({
                 />
 
                 <TouchableOpacity
-                  onPress={() =>
-                    setSecurePassword(!securePassword)
-                  }
+                  onPress={() => setSecurePassword(!securePassword)}
                   activeOpacity={0.7}
                   accessibilityLabel={
-                    securePassword
-                      ? 'Show password'
-                      : 'Hide password'
+                    securePassword ? "Show password" : "Hide password"
                   }
                 >
                   <Ionicons
-                    name={
-                      securePassword
-                        ? 'eye-outline'
-                        : 'eye-off-outline'
-                    }
+                    name={securePassword ? "eye-outline" : "eye-off-outline"}
                     size={21}
                     color={COLORS.gray500}
                   />
@@ -290,46 +248,27 @@ export default function LoginScreen({
               activeOpacity={0.7}
             >
               <View
-                style={[
-                  styles.checkbox,
-                  rememberMe && styles.checkboxActive,
-                ]}
+                style={[styles.checkbox, rememberMe && styles.checkboxActive]}
               >
                 {rememberMe && (
-                  <Ionicons
-                    name="checkmark"
-                    size={15}
-                    color={COLORS.white}
-                  />
+                  <Ionicons name="checkmark" size={15} color={COLORS.white} />
                 )}
               </View>
 
-              <Text style={styles.rememberText}>
-                Keep me signed in
-              </Text>
+              <Text style={styles.rememberText}>Keep me signed in</Text>
             </TouchableOpacity>
 
             {/* Login Button */}
 
             <TouchableOpacity
-              style={[
-                styles.loginButton,
-                !canLogin && styles.loginButtonDisabled,
-              ]}
-              onPress={handleLogin}
+              style={styles.loginButton}
               activeOpacity={0.85}
-              disabled={!canLogin}
+              onPress={onSignIn}
             >
-              <Text style={styles.loginButtonText}>
-                Sign in securely
-              </Text>
+              <Text style={styles.loginButtonText}>Sign in securely</Text>
 
               <View style={styles.loginArrow}>
-                <Ionicons
-                  name="arrow-forward"
-                  size={19}
-                  color={COLORS.blue}
-                />
+                <Ionicons name="arrow-forward" size={20} color={COLORS.blue} />
               </View>
             </TouchableOpacity>
           </View>
@@ -341,9 +280,7 @@ export default function LoginScreen({
           <View style={styles.otherAccess}>
             <View style={styles.divider} />
 
-            <Text style={styles.orText}>
-              OR
-            </Text>
+            <Text style={styles.orText}>OR</Text>
 
             <View style={styles.divider} />
           </View>
@@ -352,7 +289,7 @@ export default function LoginScreen({
             style={styles.biometricButton}
             activeOpacity={0.75}
             onPress={() => {
-              console.log('Biometric authentication');
+              console.log("Biometric authentication");
             }}
           >
             <View style={styles.biometricIcon}>
@@ -364,20 +301,14 @@ export default function LoginScreen({
             </View>
 
             <View style={styles.biometricContent}>
-              <Text style={styles.biometricTitle}>
-                Use biometric sign in
-              </Text>
+              <Text style={styles.biometricTitle}>Use biometric sign in</Text>
 
               <Text style={styles.biometricDescription}>
                 Face ID or fingerprint
               </Text>
             </View>
 
-            <Ionicons
-              name="chevron-forward"
-              size={20}
-              color={COLORS.gray500}
-            />
+            <Ionicons name="chevron-forward" size={20} color={COLORS.gray500} />
           </TouchableOpacity>
 
           {/* ---------------------------------------------------------- */}
@@ -385,19 +316,15 @@ export default function LoginScreen({
           {/* ---------------------------------------------------------- */}
 
           <View style={styles.supportSection}>
-            <Text style={styles.supportText}>
-              Having trouble signing in?
-            </Text>
+            <Text style={styles.supportText}>Having trouble signing in?</Text>
 
             <TouchableOpacity
               activeOpacity={0.7}
               onPress={() => {
-                console.log('Contact support');
+                console.log("Contact support");
               }}
             >
-              <Text style={styles.supportLink}>
-                Contact support
-              </Text>
+              <Text style={styles.supportLink}>Contact support</Text>
             </TouchableOpacity>
           </View>
 
@@ -407,20 +334,14 @@ export default function LoginScreen({
 
           <View style={styles.footer}>
             <View style={styles.footerSecurity}>
-              <Ionicons
-                name="lock-closed"
-                size={12}
-                color={COLORS.gray500}
-              />
+              <Ionicons name="lock-closed" size={12} color={COLORS.gray500} />
 
               <Text style={styles.footerText}>
                 Secure healthcare information system
               </Text>
             </View>
 
-            <Text style={styles.version}>
-              RefuHealth • v1.0
-            </Text>
+            <Text style={styles.version}>RefuHealth • v1.0</Text>
           </View>
         </ScrollView>
       </KeyboardAvoidingView>

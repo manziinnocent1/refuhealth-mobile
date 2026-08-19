@@ -3,19 +3,23 @@ import React, { useState } from "react";
 import WelcomeScreen from "@/screens/auth/WelcomeScreen";
 import LoginScreen from "@/screens/auth/LoginScreen";
 import RegisterScreen from "@/screens/auth/RegisterScreen";
+import RoleSelectionScreen from "@/screens/role/RoleSelectionScreen";
 
-type AuthScreen = "welcome" | "login" | "register";
+type AuthScreen = "welcome" | "login" | "register" | "role";
 
 export default function Index() {
   const [currentScreen, setCurrentScreen] = useState<AuthScreen>("welcome");
 
   switch (currentScreen) {
+    // ================================
+    // LOGIN
+    // ================================
     case "login":
       return (
         <LoginScreen
           onSignIn={() => {
-            // Later:
-            // authenticate user and go to dashboard
+            // After signing in, show role selection
+            setCurrentScreen("role");
           }}
           onCreateAccount={() => {
             setCurrentScreen("register");
@@ -23,12 +27,17 @@ export default function Index() {
         />
       );
 
+    // ================================
+    // REGISTER
+    // ================================
     case "register":
       return (
         <RegisterScreen
           onRegister={() => {
             // Later:
-            // create account and continue to verification
+            // create account
+            // verify account
+            // then continue to role/dashboard
           }}
           onSignIn={() => {
             setCurrentScreen("login");
@@ -39,6 +48,15 @@ export default function Index() {
         />
       );
 
+    // ================================
+    // ROLE SELECTION
+    // ================================
+    case "role":
+      return <RoleSelectionScreen />;
+
+    // ================================
+    // WELCOME
+    // ================================
     case "welcome":
     default:
       return (

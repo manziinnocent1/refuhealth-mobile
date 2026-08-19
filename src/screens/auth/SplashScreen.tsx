@@ -2,12 +2,12 @@ import React, { useEffect, useRef } from 'react';
 import {
   Animated,
   Easing,
-  SafeAreaView,
   StatusBar,
   StyleSheet,
   Text,
   View,
 } from 'react-native';
+import { SafeAreaView } from "react-native-safe-area-context";
 import { Ionicons } from '@expo/vector-icons';
 
 const COLORS = {

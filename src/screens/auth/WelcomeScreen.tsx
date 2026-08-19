@@ -1,6 +1,5 @@
 import React from "react";
 import {
-  SafeAreaView,
   StatusBar,
   StyleSheet,
   Text,
@@ -10,6 +9,8 @@ import {
   useWindowDimensions,
   Platform,
 } from "react-native";
+
+import { SafeAreaView } from "react-native-safe-area-context";
 import { Ionicons } from "@expo/vector-icons";
 
 type WelcomeScreenProps = {
